@@ -22,7 +22,7 @@ export function Navbar() {
 
     const navLinks = [
         { name: "Home", href: "/" },
-        { name: "Menu", href: "#menu" },
+        { name: "Menu", href: "/orders" },
         { name: "Our Story", href: "#story" },
         { name: "Contact", href: "#contact" },
     ];
@@ -81,7 +81,7 @@ export function Navbar() {
                     className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10"
                 >
                     <nav className="flex flex-col p-4 gap-4">
-                        <Link href="#menu" className="text-white hover:text-orange-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Menu</Link>
+                        <Link href="/orders" className="text-white hover:text-orange-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Menu</Link>
                         <Link href="#story" className="text-white hover:text-orange-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Our Story</Link>
                         <Link href="#location" className="text-white hover:text-orange-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Location</Link>
                         <Link

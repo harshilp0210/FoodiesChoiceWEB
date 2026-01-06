@@ -36,9 +36,9 @@ export function Footer() {
                         <ul className="space-y-4">
                             {["Home", "Menu", "Our Story", "Reservations", "Order Online"].map((item) => (
                                 <li key={item}>
-                                    <a href="#" className="text-slate-400 hover:text-orange-500 transition-colors">
+                                    <Link href={item === "Menu" || item === "Order Online" ? "/orders" : item === "Home" ? "/" : `#${item.toLowerCase().replace(" ", "")}`} className="text-slate-400 hover:text-orange-500 transition-colors">
                                         {item}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
