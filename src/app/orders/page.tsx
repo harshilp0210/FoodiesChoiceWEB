@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star, Plus, ShoppingBag, Filter } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/CartContext";
 
 // Mock Data
 const CATEGORIES = ["All", "Starters", "Mains", "Sides", "Desserts", "Drinks"];
@@ -87,6 +88,7 @@ const MENU_ITEMS = [
 export default function OrdersPage() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
+    const { addToCart } = useCart();
 
     const filteredItems = MENU_ITEMS.filter(item => {
         const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
@@ -189,7 +191,18 @@ export default function OrdersPage() {
                                     </div>
                                     <p className="text-slate-400 text-sm mb-4 line-clamp-2">{item.description}</p>
 
-                                    <button className="w-full py-2.5 bg-white/5 hover:bg-orange-600 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2 group/btn">
+                                    <button
+                                        onClick={() => {
+                                            addToCart({
+                                                id: item.id,
+                                                name: item.name,
+                                                price: parseFloat(item.price.replace("$", "")),
+                                                image: item.image,
+                                                description: item.description
+                                            });
+                                        }}
+                                        className="w-full py-2.5 bg-white/5 hover:bg-orange-600 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2 group/btn"
+                                    >
                                         Add to Order <ShoppingBag className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                                     </button>
                                 </div>

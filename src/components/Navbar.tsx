@@ -7,10 +7,12 @@ import { ShoppingBag, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { POS_URL } from "@/lib/constants";
+import { useCart } from "@/context/CartContext";
 
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { cartCount, setIsCartOpen } = useCart();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -57,11 +59,23 @@ export function Navbar() {
 
                 <div className="flex items-center gap-4">
                     <Link
-                        href={POS_URL}
+                        href="/orders"
                         className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-medium transition-colors text-sm"
                     >
                         Order Now <ShoppingBag className="w-4 h-4" />
                     </Link>
+
+                    <button
+                        onClick={() => setIsCartOpen(true)}
+                        className="relative p-2 text-white hover:text-orange-500 transition-colors"
+                    >
+                        <ShoppingBag className="w-6 h-6" />
+                        {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900">
+                                {cartCount}
+                            </span>
+                        )}
+                    </button>
 
                     <button
                         className="md:hidden text-white p-2"
