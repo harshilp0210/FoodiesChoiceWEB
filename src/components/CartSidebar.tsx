@@ -33,7 +33,7 @@ export function CartSidebar() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setIsCartOpen(false)}
-                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
                     />
 
                     {/* Sidebar */}
@@ -42,7 +42,7 @@ export function CartSidebar() {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed top-0 right-0 h-full w-full max-w-md bg-slate-950 border-l border-white/10 z-50 flex flex-col shadow-2xl"
+                        className="fixed top-0 right-0 h-full w-full max-w-md bg-slate-950 border-l border-white/10 z-[60] flex flex-col shadow-2xl"
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between p-6 border-b border-white/5">
@@ -104,16 +104,16 @@ export function CartSidebar() {
                                                 <div className="flex items-center gap-3 bg-black/40 rounded-full px-1 border border-white/10">
                                                     <button
                                                         onClick={() => item.quantity === 1 ? removeFromCart(item.id) : updateQuantity(item.id, -1)}
-                                                        className="w-8 h-8 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                                                        className="w-8 h-8 md:w-8 md:h-8 flex items-center justify-center text-slate-300 hover:text-white transition-colors p-1"
                                                     >
-                                                        {item.quantity === 1 ? <Trash2 className="w-3.5 h-3.5" /> : <Minus className="w-3.5 h-3.5" />}
+                                                        {item.quantity === 1 ? <Trash2 className="w-4 h-4" /> : <Minus className="w-4 h-4" />}
                                                     </button>
                                                     <span className="text-sm font-medium text-white w-4 text-center">{item.quantity}</span>
                                                     <button
                                                         onClick={() => updateQuantity(item.id, 1)}
-                                                        className="w-8 h-8 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                                                        className="w-8 h-8 md:w-8 md:h-8 flex items-center justify-center text-slate-300 hover:text-white transition-colors p-1"
                                                     >
-                                                        <Plus className="w-3.5 h-3.5" />
+                                                        <Plus className="w-4 h-4" />
                                                     </button>
                                                 </div>
                                             </div>

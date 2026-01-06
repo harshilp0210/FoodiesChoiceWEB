@@ -69,25 +69,25 @@ export default function CheckoutPage() {
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <label htmlFor="firstName" className="text-sm font-medium text-slate-300">First Name</label>
-                                        <input required type="text" id="firstName" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="John" />
+                                        <input required type="text" id="firstName" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-base md:text-sm focus:outline-none focus:border-orange-500 transition-colors" placeholder="John" />
                                     </div>
                                     <div className="space-y-2">
                                         <label htmlFor="lastName" className="text-sm font-medium text-slate-300">Last Name</label>
-                                        <input required type="text" id="lastName" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="Doe" />
+                                        <input required type="text" id="lastName" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-base md:text-sm focus:outline-none focus:border-orange-500 transition-colors" placeholder="Doe" />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
                                     <label htmlFor="email" className="text-sm font-medium text-slate-300">Email Address</label>
                                     <div className="relative">
                                         <Mail className="absolute left-4 top-3.5 w-5 h-5 text-slate-500" />
-                                        <input required type="email" id="email" className="w-full bg-white/5 border border-white/10 rounded-lg pl-12 pr-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="john@example.com" />
+                                        <input required type="email" id="email" className="w-full bg-white/5 border border-white/10 rounded-lg pl-12 pr-4 py-3 text-white text-base md:text-sm focus:outline-none focus:border-orange-500 transition-colors" placeholder="john@example.com" />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
                                     <label htmlFor="phone" className="text-sm font-medium text-slate-300">Phone Number</label>
                                     <div className="relative">
                                         <Phone className="absolute left-4 top-3.5 w-5 h-5 text-slate-500" />
-                                        <input required type="tel" id="phone" className="w-full bg-white/5 border border-white/10 rounded-lg pl-12 pr-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="+44 7123 456789" />
+                                        <input required type="tel" id="phone" className="w-full bg-white/5 border border-white/10 rounded-lg pl-12 pr-4 py-3 text-white text-base md:text-sm focus:outline-none focus:border-orange-500 transition-colors" placeholder="+44 7123 456789" />
                                     </div>
                                 </div>
                             </div>
@@ -99,16 +99,16 @@ export default function CheckoutPage() {
                                 </h2>
                                 <div className="space-y-2">
                                     <label htmlFor="address" className="text-sm font-medium text-slate-300">Street Address</label>
-                                    <input required type="text" id="address" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="123 Main St" />
+                                    <input required type="text" id="address" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-base md:text-sm focus:outline-none focus:border-orange-500 transition-colors" placeholder="123 Main St" />
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <label htmlFor="city" className="text-sm font-medium text-slate-300">Town / City</label>
-                                        <input required type="text" id="city" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="London" />
+                                        <input required type="text" id="city" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-base md:text-sm focus:outline-none focus:border-orange-500 transition-colors" placeholder="London" />
                                     </div>
                                     <div className="space-y-2">
                                         <label htmlFor="postcode" className="text-sm font-medium text-slate-300">Postcode</label>
-                                        <input required type="text" id="postcode" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors" placeholder="SW1A 1AA" />
+                                        <input required type="text" id="postcode" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-base md:text-sm focus:outline-none focus:border-orange-500 transition-colors" placeholder="SW1A 1AA" />
                                     </div>
                                 </div>
                             </div>
