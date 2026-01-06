@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { CartProvider } from "@/context/CartContext";
 import { CartSidebar } from "@/components/CartSidebar";
+import { Toaster } from "sonner";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -58,9 +59,9 @@ export default function RootLayout({
             <Footer />
           </SmoothScroll>
           <CartSidebar />
+          <Toaster position="bottom-right" richColors />
         </CartProvider>
       </body>
-
     </html>
   );
 }

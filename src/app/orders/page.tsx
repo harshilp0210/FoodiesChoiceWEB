@@ -6,6 +6,7 @@ import { Star, Plus, ShoppingBag, Filter } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
+import { toast } from "sonner";
 
 // Mock Data
 const CATEGORIES = ["All", "Starters", "Mains", "Sides", "Desserts", "Drinks"];
@@ -200,6 +201,7 @@ export default function OrdersPage() {
                                                 image: item.image,
                                                 description: item.description
                                             });
+                                            toast.success(`${item.name} added to order`);
                                         }}
                                         className="w-full py-2.5 bg-white/5 hover:bg-orange-600 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2 group/btn"
                                     >
