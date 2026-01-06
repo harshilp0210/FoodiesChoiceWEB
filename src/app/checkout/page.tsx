@@ -3,15 +3,17 @@
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { motion } from "framer-motion";
-import { ArrowLeft, CheckCircle2, CreditCard, User, MapPin, Mail, Phone } from "lucide-react";
+import { ArrowLeft, CheckCircle2, CreditCard, User, MapPin, Mail, Phone, Banknote } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export default function CheckoutPage() {
     const { items, cartTotal, clearCart } = useCart();
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState<"card" | "cash">("card");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -116,14 +118,53 @@ export default function CheckoutPage() {
                                 <h2 className="text-xl font-bold text-white flex items-center gap-2">
                                     <CreditCard className="w-5 h-5 text-orange-500" /> Payment Method
                                 </h2>
-                                <div className="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-3">
-                                    <div className="w-10 h-6 bg-slate-700 rounded flex items-center justify-center text-xs font-bold text-white">VISA</div>
-                                    <div>
-                                        <div className="text-sm font-medium text-white">Ending in 4242</div>
-                                        <div className="text-xs text-slate-400">Expires 12/28</div>
-                                    </div>
-                                    <button type="button" className="ml-auto text-orange-500 text-sm hover:underline">Change</button>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => setPaymentMethod("card")}
+                                        className={cn(
+                                            "flex flex-col items-center gap-3 p-4 rounded-xl border transition-all",
+                                            paymentMethod === "card"
+                                                ? "bg-orange-500/10 border-orange-500 text-white"
+                                                : "bg-white/5 border-white/10 text-slate-400 hover:bg-white/10"
+                                        )}
+                                    >
+                                        <CreditCard className={cn("w-8 h-8", paymentMethod === "card" ? "text-orange-500" : "text-slate-500")} />
+                                        <span className="font-medium">Card Payment</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setPaymentMethod("cash")}
+                                        className={cn(
+                                            "flex flex-col items-center gap-3 p-4 rounded-xl border transition-all",
+                                            paymentMethod === "cash"
+                                                ? "bg-orange-500/10 border-orange-500 text-white"
+                                                : "bg-white/5 border-white/10 text-slate-400 hover:bg-white/10"
+                                        )}
+                                    >
+                                        <Banknote className={cn("w-8 h-8", paymentMethod === "cash" ? "text-orange-500" : "text-slate-500")} />
+                                        <span className="font-medium">Cash on Delivery</span>
+                                    </button>
                                 </div>
+
+                                {paymentMethod === "card" && (
+                                    <div className="p-4 bg-white/5 border border-white/10 rounded-xl flex items-center gap-3 mt-4 animate-in fade-in slide-in-from-top-2">
+                                        <div className="w-10 h-6 bg-slate-700 rounded flex items-center justify-center text-xs font-bold text-white">VISA</div>
+                                        <div>
+                                            <div className="text-sm font-medium text-white">Ending in 4242</div>
+                                            <div className="text-xs text-slate-400">Expires 12/28</div>
+                                        </div>
+                                        <button type="button" className="ml-auto text-orange-500 text-sm hover:underline">Change</button>
+                                    </div>
+                                )}
+
+                                {paymentMethod === "cash" && (
+                                    <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl mt-4 animate-in fade-in slide-in-from-top-2">
+                                        <p className="text-sm text-yellow-200 text-center">
+                                            Please have the exact amount ready upon delivery.
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </form>
                     </div>
