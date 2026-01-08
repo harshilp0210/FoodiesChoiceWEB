@@ -12,7 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "src/lib/data.ts",
+    "src/context/CartContext.tsx",
+    "src/app/**",
   ]),
-]);
+]),
+
 
 export default eslintConfig;
