@@ -1,23 +1,21 @@
-
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ShoppingBag, Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { ShoppingBag, Menu, X, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { POS_URL } from "@/lib/constants";
 import { useCart } from "@/context/CartContext";
+import { AnimatePresence, motion } from "framer-motion";
 
 export function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { cartCount, setIsCartOpen } = useCart();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
+    // Handle scroll effect
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
+        const handleScroll = () => setScrolled(window.scrollY > 20);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -25,89 +23,133 @@ export function Navbar() {
     const navLinks = [
         { name: "Home", href: "/" },
         { name: "Menu", href: "/orders" },
-        { name: "Our Story", href: "#story" },
-        { name: "Contact", href: "#contact" },
+        { name: "Our Story", href: "/story" },
+        { name: "Reservations", href: "/reservations" },
     ];
 
     return (
-        <motion.header
-            className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
-                isScrolled ? "bg-black/80 backdrop-blur-md border-white/10 py-4" : "bg-transparent py-6"
-            )}
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.5 }}
-        >
-            <div className="container mx-auto px-4 flex items-center justify-between">
-                <Link href="/" className="text-2xl font-bold font-display text-white tracking-tighter">
-                    Foodie's<span className="text-orange-500">.</span>
-                </Link>
-
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="text-sm font-medium text-slate-300 hover:text-orange-400 transition-colors"
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                </nav>
-
-                <div className="flex items-center gap-4">
-                    <Link
-                        href="/orders"
-                        className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-medium transition-colors text-sm"
-                    >
-                        Order Now <ShoppingBag className="w-4 h-4" />
+        <>
+            <header
+                className={cn(
+                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
+                    scrolled ? "bg-black/95 backdrop-blur-md border-white/10 py-3 shadow-lg shadow-black/50" : "bg-transparent py-5"
+                )}
+            >
+                <div className="container mx-auto px-4 flex items-center justify-between">
+                    {/* Logo */}
+                    <Link href="/" className="relative h-10 w-40 md:h-12 md:w-48 transition-transform hover:scale-105">
+                        <Image
+                            src="/logo.png"
+                            alt="Foodie's Choice"
+                            fill
+                            className="object-contain object-left"
+                            priority
+                        />
                     </Link>
 
-                    <button
-                        onClick={() => setIsCartOpen(true)}
-                        className="relative p-2 text-white hover:text-orange-500 transition-colors"
-                    >
-                        <ShoppingBag className="w-6 h-6" />
-                        {cartCount > 0 && (
-                            <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900">
-                                {cartCount}
-                            </span>
-                        )}
-                    </button>
-
-                    <button
-                        className="md:hidden text-white p-2"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    >
-                        {isMobileMenuOpen ? <X /> : <Menu />}
-                    </button>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10"
-                >
-                    <nav className="flex flex-col p-4 gap-4">
-                        <Link href="/orders" className="text-white hover:text-orange-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Menu</Link>
-                        <Link href="#story" className="text-white hover:text-orange-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Our Story</Link>
-                        <Link href="#location" className="text-white hover:text-orange-500 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Location</Link>
-                        <Link
-                            href={POS_URL}
-                            className="flex items-center justify-center gap-2 px-5 py-3 bg-orange-600 text-white rounded-lg font-medium"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            Order Now <ShoppingBag className="w-4 h-4" />
-                        </Link>
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex items-center gap-8 bg-black/40 backdrop-blur-sm px-8 py-2.5 rounded-full border border-white/5">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className="text-sm font-medium text-slate-300 hover:text-white hover:text-orange-500 transition-colors uppercase tracking-wide"
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
                     </nav>
-                </motion.div>
-            )}
-        </motion.header>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => setIsCartOpen(true)}
+                            className="relative p-2 text-white hover:text-orange-500 transition-colors"
+                        >
+                            <ShoppingBag className="w-6 h-6" />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </button>
+
+                        <Link
+                            href="/orders"
+                            className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-bold uppercase tracking-wide text-xs transition-all hover:shadow-lg hover:shadow-orange-500/20"
+                        >
+                            Order Now
+                        </Link>
+
+                        {/* Mobile Menu Button */}
+                        <button
+                            onClick={() => setIsMobileMenuOpen(true)}
+                            className="md:hidden p-2 text-white hover:text-orange-500 transition-colors"
+                        >
+                            <Menu className="w-7 h-7" />
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60]"
+                        />
+                        <motion.div
+                            initial={{ x: "100%" }}
+                            animate={{ x: 0 }}
+                            exit={{ x: "100%" }}
+                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            className="fixed top-0 right-0 h-full w-[300px] bg-slate-950 border-l border-white/10 z-[70] p-6 flex flex-col"
+                        >
+                            <div className="flex justify-between items-center mb-8">
+                                <span className="text-xl font-bold font-display text-white">Menu</span>
+                                <button
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="p-2 text-slate-400 hover:text-white transition-colors"
+                                >
+                                    <X className="w-6 h-6" />
+                                </button>
+                            </div>
+
+                            <div className="flex flex-col gap-6">
+                                {navLinks.map((link) => (
+                                    <Link
+                                        key={link.name}
+                                        href={link.href}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-lg font-medium text-slate-300 hover:text-orange-500 transition-colors flex items-center justify-between group border-b border-white/5 pb-4"
+                                    >
+                                        {link.name}
+                                        <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-orange-500" />
+                                    </Link>
+                                ))}
+                            </div>
+
+                            <div className="mt-auto pt-8 border-t border-white/10">
+                                <Link
+                                    href="/orders"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="flex w-full items-center justify-center gap-2 px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold uppercase tracking-wide transition-all"
+                                >
+                                    Order Online
+                                </Link>
+                                <p className="text-center text-slate-500 text-xs mt-6">
+                                    © {new Date().getFullYear()} Foodie&apos;s Choice
+                                </p>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
+        </>
     );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -8,8 +8,10 @@ import { CartProvider } from "@/context/CartContext";
 import { CartSidebar } from "@/components/CartSidebar";
 import { Toaster } from "sonner";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+
+
+const playfair = Playfair_Display({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
 });
@@ -50,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${outfit.variable} ${inter.variable} antialiased font-sans bg-black text-white selection:bg-orange-500 selection:text-white`}
+        className={`${playfair.variable} ${inter.variable} antialiased font-sans bg-black text-white selection:bg-orange-500 selection:text-white`}
       >
         <CartProvider>
           <SmoothScroll>
