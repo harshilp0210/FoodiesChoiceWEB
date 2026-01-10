@@ -19,7 +19,7 @@ export function StorySection() {
                     >
                         <div className="relative h-[600px] w-full rounded-2xl overflow-hidden">
                             <Image
-                                src="https://images.unsplash.com/photo-1577106263724-2c8e03bfe9f4?q=80&w=2800&auto=format&fit=crop"
+                                src="/images/chef-story.png"
                                 alt="Chef plating food"
                                 fill
                                 className="object-cover"

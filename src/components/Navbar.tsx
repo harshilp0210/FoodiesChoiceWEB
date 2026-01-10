@@ -9,9 +9,9 @@ import { useCart } from "@/context/CartContext";
 import { AnimatePresence, motion } from "framer-motion";
 
 export function Navbar() {
-    const { cartCount, setIsCartOpen } = useCart();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const PHONE_NUMBER = "+44 7586 558414";
 
     // Handle scroll effect
     useEffect(() => {
@@ -37,12 +37,12 @@ export function Navbar() {
             >
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="relative h-10 w-40 md:h-12 md:w-48 transition-transform hover:scale-105">
+                    <Link href="/" className="relative h-14 w-48 md:h-24 md:w-72 transition-transform hover:scale-105">
                         <Image
-                            src="/logo.png"
+                            src="/logo-new.jpg"
                             alt="Foodie's Choice"
                             fill
-                            className="object-contain object-left"
+                            className="object-contain object-left md:object-center"
                             priority
                         />
                     </Link>
@@ -62,24 +62,12 @@ export function Navbar() {
 
                     {/* Actions */}
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => setIsCartOpen(true)}
-                            className="relative p-2 text-white hover:text-orange-500 transition-colors"
+                        <a
+                            href={`tel:${PHONE_NUMBER}`}
+                            className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-full font-bold uppercase tracking-wide text-xs transition-all hover:shadow-lg hover:shadow-green-500/20"
                         >
-                            <ShoppingBag className="w-6 h-6" />
-                            {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900">
-                                    {cartCount}
-                                </span>
-                            )}
-                        </button>
-
-                        <Link
-                            href="/orders"
-                            className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-full font-bold uppercase tracking-wide text-xs transition-all hover:shadow-lg hover:shadow-orange-500/20"
-                        >
-                            Order Now
-                        </Link>
+                            Call to Order
+                        </a>
 
                         {/* Mobile Menu Button */}
                         <button
@@ -135,13 +123,13 @@ export function Navbar() {
                             </div>
 
                             <div className="mt-auto pt-8 border-t border-white/10">
-                                <Link
-                                    href="/orders"
+                                <a
+                                    href={`tel:${PHONE_NUMBER}`}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="flex w-full items-center justify-center gap-2 px-6 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold uppercase tracking-wide transition-all"
+                                    className="flex w-full items-center justify-center gap-2 px-6 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold uppercase tracking-wide transition-all"
                                 >
-                                    Order Online
-                                </Link>
+                                    Call to Order
+                                </a>
                                 <p className="text-center text-slate-500 text-xs mt-6">
                                     © {new Date().getFullYear()} Foodie&apos;s Choice
                                 </p>

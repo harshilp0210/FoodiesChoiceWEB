@@ -2,165 +2,208 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, Plus, ShoppingBag, Filter } from "lucide-react";
-import Image from "next/image";
+import { Phone, Star, Search, Filter } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/context/CartContext";
-import { toast } from "sonner";
 
-import { categories, menuItems } from "@/lib/data";
+import { categories, menuItems, type MenuItem } from "@/lib/data";
 
 export default function OrdersPage() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
-    const { addToCart } = useCart();
+    const PHONE_NUMBER = "+44 7586 558414";
 
-    const filteredItems = menuItems.filter(item => {
-        const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+    // Group items by category
+    const getGroupedItems = () => {
+        let items = menuItems;
+
+        // 1. Search Filter
+        if (searchQuery) {
+            items = items.filter(item =>
+                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.description.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        }
+
+        // 2. Grouping
+        const grouped: Record<string, MenuItem[]> = {};
+
+        // Initialize groups based on selected category or all categories
+        const catsToShow = selectedCategory === "All" ? categories : [selectedCategory];
+
+        catsToShow.forEach(cat => {
+            const catItems = items.filter(item => item.category === cat);
+            if (catItems.length > 0) {
+                grouped[cat] = catItems;
+            }
+        });
+
+        return grouped;
+    };
+
+    const groupedItems = getGroupedItems();
+    const hasResults = Object.keys(groupedItems).length > 0;
 
     return (
-        <main className="min-h-screen bg-black pt-24 pb-12">
+        <main className="min-h-screen bg-black pt-24 pb-20">
+
+            {/* Sticky Call to Order Banner (Mobile) */}
+            <div className="fixed bottom-6 right-6 z-50 md:hidden">
+                <a
+                    href={`tel:${PHONE_NUMBER}`}
+                    className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-green-500/30 hover:bg-green-700 transition-colors"
+                >
+                    <Phone className="w-5 h-5" /> Call to Order
+                </a>
+            </div>
 
             {/* Header */}
-            <div className="container mx-auto px-4 mb-12">
+            <div className="container mx-auto px-4 mb-12 text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center space-y-4"
+                    className="space-y-4"
                 >
-                    <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
+                    <h1 className="text-4xl md:text-6xl font-display font-bold text-white">
                         Our Menu
                     </h1>
-                    <p className="text-slate-400 max-w-2xl mx-auto">
-                        Explore our wide selection of authentic dishes, handcrafted with fresh ingredients.
-                    </p>
+                    <div className="h-1 w-24 bg-orange-500 mx-auto rounded-full" />
+                    <div className="hidden md:flex justify-center pt-2">
+                        <a href={`tel:${PHONE_NUMBER}`} className="inline-flex items-center gap-2 text-green-500 hover:text-green-400 font-bold text-xl transition-colors">
+                            <Phone className="w-5 h-5" /> {PHONE_NUMBER}
+                        </a>
+                    </div>
                 </motion.div>
             </div>
 
-            {/* Filters */}
-            <div className="container mx-auto px-4 mb-8 sticky top-20 z-40 bg-black/80 backdrop-blur-md py-4 -mx-4">
-                <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                    {/* Categories */}
-                    <div className="flex overflow-x-auto pb-2 md:pb-0 gap-2 w-full md:w-auto scrollbar-hide">
-                        <button
-                            onClick={() => setSelectedCategory("All")}
-                            className={cn(
-                                "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all",
-                                selectedCategory === "All"
-                                    ? "bg-orange-600 text-white shadow-lg shadow-orange-500/25"
-                                    : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
-                            )}
-                        >
-                            All
-                        </button>
-                        {categories.map((cat) => (
+            {/* Filters & Search */}
+            <div className="sticky top-[72px] z-40 bg-black/95 backdrop-blur-md border-b border-white/10 mb-12 shadow-md">
+                <div className="container mx-auto px-4 py-4">
+                    <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                        {/* Categories */}
+                        <div className="flex flex-wrap justify-center gap-2 w-full md:w-auto">
                             <button
-                                key={cat}
-                                onClick={() => setSelectedCategory(cat)}
+                                onClick={() => setSelectedCategory("All")}
                                 className={cn(
-                                    "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all",
-                                    selectedCategory === cat
-                                        ? "bg-orange-600 text-white shadow-lg shadow-orange-500/25"
+                                    "px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap",
+                                    selectedCategory === "All"
+                                        ? "bg-orange-600 text-white"
                                         : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
                                 )}
                             >
-                                {cat}
+                                All
                             </button>
-                        ))}
-                    </div>
+                            {categories.map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => setSelectedCategory(cat)}
+                                    className={cn(
+                                        "px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap",
+                                        selectedCategory === cat
+                                            ? "bg-orange-600 text-white"
+                                            : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
+                                    )}
+                                >
+                                    {cat}
+                                </button>
+                            ))}
+                        </div>
 
-                    {/* Search (Optional) */}
-                    <div className="relative w-full md:w-64">
-                        <input
-                            type="text"
-                            placeholder="Search dishes..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
-                        />
+                        {/* Search */}
+                        <div className="relative w-full md:w-64">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                            <input
+                                type="text"
+                                placeholder="Search menu..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-slate-900 border border-white/10 rounded-full pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-orange-500 transition-colors"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Grid */}
-            <div className="container mx-auto px-4">
-                <motion.div
-                    layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
-                    <AnimatePresence>
-                        {filteredItems.map((item) => (
-                            <motion.div
-                                layout
-                                key={item.id}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.3 }}
-                                className="group bg-slate-900/50 border border-white/5 rounded-2xl overflow-hidden hover:border-orange-500/30 transition-all hover:shadow-xl hover:shadow-orange-500/10"
-                            >
-                                {/* Image content */}
-                                <div className="relative h-56 overflow-hidden bg-slate-800">
-                                    {/* Using Placeholder if unknown, else real image */}
-                                    <Image
-                                        src={item.image.startsWith("/") ? item.image : "/placeholder-food.jpg"}
-                                        alt={item.name}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    {item.rating && (
-                                        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur px-2 py-1 rounded-lg flex items-center gap-1 text-yellow-500 text-xs font-bold border border-white/10">
-                                            <Star className="w-3 h-3 fill-current" /> {item.rating.toFixed(1)}
-                                        </div>
-                                    )}
-                                </div>
-
-                                {/* Content */}
-                                <div className="p-5">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h3 className="text-lg font-bold text-white group-hover:text-orange-400 transition-colors">{item.name}</h3>
-                                            <p className="text-xs text-orange-500 uppercase tracking-wide font-medium mt-1">{item.category}</p>
-                                        </div>
-                                        <span className="text-lg font-semibold text-white">£{item.price.toFixed(2)}</span>
-                                    </div>
-                                    <p className="text-slate-400 text-sm mb-4 line-clamp-2">{item.description}</p>
-
-                                    <button
-                                        onClick={() => {
-                                            addToCart({
-                                                id: item.id,
-                                                name: item.name,
-                                                price: item.price,
-                                                image: item.image,
-                                                description: item.description
-                                            });
-                                            toast.success(`${item.name} added to order`);
-                                        }}
-                                        className="w-full py-2.5 bg-white/5 hover:bg-orange-600 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2 group/btn"
-                                    >
-                                        Add to Order <ShoppingBag className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                                    </button>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                </motion.div>
-
-                {filteredItems.length === 0 && (
+            {/* Menu List */}
+            <div className="container mx-auto px-4 max-w-7xl">
+                {!hasResults ? (
                     <div className="text-center py-20 text-slate-500">
                         <Filter className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                        <p className="text-lg">No items found matching your criteria.</p>
+                        <p className="text-lg">No items found.</p>
                         <button
                             onClick={() => { setSelectedCategory("All"); setSearchQuery(""); }}
                             className="mt-4 text-orange-500 hover:text-orange-400 underline"
                         >
                             Clear filters
                         </button>
+                    </div>
+                ) : (
+                    <div className={cn(
+                        "transition-all",
+                        selectedCategory === "All"
+                            ? "columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+                            : "space-y-12"
+                    )}>
+                        {Object.entries(groupedItems).map(([category, items]) => (
+                            <motion.div
+                                key={category}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "50px" }}
+                                className={cn(
+                                    "break-inside-avoid mb-6", // For masonry layout
+                                    selectedCategory === "All"
+                                        ? "bg-neutral-900/50 border border-white/5 rounded-2xl p-6 hover:border-orange-500/20 transition-colors"
+                                        : ""
+                                )}
+                            >
+                                <div className={cn(
+                                    "flex items-center gap-4 mb-6",
+                                    selectedCategory !== "All" && "justify-center"
+                                )}>
+                                    <h2 className={cn(
+                                        "font-display font-bold text-orange-500",
+                                        selectedCategory === "All" ? "text-2xl" : "text-4xl"
+                                    )}>
+                                        {category}
+                                    </h2>
+                                    {selectedCategory !== "All" && <div className="h-0.5 bg-orange-500/50 w-24 rounded-full" />}
+                                </div>
+
+                                <div className={cn(
+                                    selectedCategory === "All"
+                                        ? "space-y-4"
+                                        : "grid md:grid-cols-2 gap-x-12 gap-y-8"
+                                )}>
+                                    {items.map((item) => (
+                                        <div key={item.id} className="group flex justify-between gap-3 relative">
+                                            <div className="grow">
+                                                <div className="flex items-baseline justify-between">
+                                                    <h3 className={cn(
+                                                        "font-bold text-slate-200 group-hover:text-orange-400 transition-colors text-base",
+                                                        selectedCategory !== "All" && "text-lg"
+                                                    )}>
+                                                        {item.name}
+                                                    </h3>
+                                                    {/* Dotted Line */}
+                                                    {selectedCategory !== "All" && (
+                                                        <div className="grow mx-3 border-b border-white/10 border-dotted opacity-30 h-1 hidden sm:block" />
+                                                    )}
+                                                </div>
+                                                <p className="text-xs text-slate-500 leading-snug line-clamp-2 mt-0.5">
+                                                    {item.description}
+                                                </p>
+                                            </div>
+                                            <span className={cn(
+                                                "font-semibold text-orange-500 whitespace-nowrap text-sm",
+                                                selectedCategory !== "All" && "text-base"
+                                            )}>
+                                                £{item.price.toFixed(2)}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
                 )}
             </div>
