@@ -6,18 +6,18 @@ import { CheckCircle2 } from "lucide-react";
 
 export function StorySection() {
     return (
-        <section id="story" className="py-24 bg-black relative overflow-hidden">
+        <section id="story" className="py-12 md:py-24 bg-black relative overflow-hidden">
             <div className="container mx-auto px-4">
-                <div className="flex flex-col lg:flex-row items-center gap-16">
+                <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-16">
                     {/* Image Side */}
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="lg:w-1/2 relative"
+                        className="lg:w-1/2 relative w-full"
                     >
-                        <div className="relative h-[600px] w-full rounded-2xl overflow-hidden">
+                        <div className="relative h-[300px] md:h-[600px] w-full rounded-2xl overflow-hidden">
                             <Image
                                 src="/images/chef-story.png"
                                 alt="Chef plating food"

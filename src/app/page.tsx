@@ -13,7 +13,7 @@ export default function Home() {
       />
 
       {/* Featured / Introduction Section */}
-      <section className="py-20 bg-neutral-900/50">
+      <section className="py-12 md:py-20 bg-neutral-900/50">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Explore Our <span className="text-orange-500">Delicacies</span></h2>
           <p className="text-neutral-400 max-w-2xl mx-auto mb-10 text-lg">
