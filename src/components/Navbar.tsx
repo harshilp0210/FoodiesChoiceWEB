@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ShoppingBag, Menu, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/context/CartContext";
 import { AnimatePresence, motion } from "framer-motion";
 
 export function Navbar() {
