@@ -80,7 +80,7 @@ Sent from Foodie's Choice Website`;
         // Simulate wait for UX
         await new Promise(resolve => setTimeout(resolve, 800));
 
-        window.location.href = `mailto:shreekrishnafoods@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = `mailto:shreekriishnafoods@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         toast.success("Opening email to confirm reservation...");
         setIsSubmitting(false);
