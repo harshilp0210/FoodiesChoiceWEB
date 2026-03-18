@@ -64,7 +64,7 @@ export function Footer() {
                             </li>
                             <li className="flex items-center gap-3 text-neutral-400">
                                 <Phone className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                                <span>+1 773-541-1711</span>
+                                <span>224-377-9043</span>
                             </li>
                             <li className="flex items-center gap-3 text-neutral-400">
                                 <Mail className="w-5 h-5 text-orange-500 flex-shrink-0" />
@@ -76,7 +76,7 @@ export function Footer() {
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-neutral-500 text-sm">
-                        &copy; {new Date().getFullYear()} Foodies Choice. All rights reserved.
+                        &copy; {new Date().getFullYear()} Foodies Choice. All rights reserved. Powered by OpenRize.
                     </p>
                     
                     <div className="flex items-center gap-6 text-sm text-neutral-500">

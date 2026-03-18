@@ -34,7 +34,7 @@ export function ReservationsContact() {
                                     <Phone className="w-6 h-6 shrink-0 mt-1" />
                                     <div>
                                         <p className="font-semibold mb-1">Phone</p>
-                                        <p className="text-orange-100">+1 773-541-1711</p>
+                                        <p className="text-orange-100">224-377-9043</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
