@@ -1,43 +1,53 @@
 "use client";
 
-import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Send } from "lucide-react";
 import Link from "next/link";
+import { POS_URL } from "@/lib/constants";
 
 export function Footer() {
     return (
-        <footer id="contact" className="bg-slate-950 border-t border-white/5 pt-16 pb-8">
+        <footer id="contact" className="bg-black border-t border-white/10 pt-20 pb-10">
             <div className="container mx-auto px-4">
-                <div className="grid md:grid-cols-4 gap-12 mb-16">
-                    {/* Brand Column */}
-                    <div className="space-y-6">
-                        <Link href="/" className="text-2xl font-bold font-display text-white tracking-tighter">
-                            Foodie's<span className="text-orange-500">.</span>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                    {/* Brand & Newsletter */}
+                    <div className="space-y-6 lg:col-span-2">
+                        <Link href="/" className="text-3xl font-bold font-display text-white tracking-tighter">
+                            Foodies<span className="text-orange-500">Choice</span>
                         </Link>
-                        <p className="text-slate-400 leading-relaxed">
-                            Elevating the dining experience with every dish.
-                            Join us for a journey of flavors.
+                        <p className="text-neutral-400 leading-relaxed max-w-sm">
+                            Experience the rich, authentic flavors right here. Reserve your table, order takeaway, or discover our seamless POS system.
                         </p>
-                        <div className="flex gap-4">
-                            <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
-                                <Instagram className="w-5 h-5" />
-                            </a>
-                            <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
-                                <Facebook className="w-5 h-5" />
-                            </a>
-                            <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
-                                <Twitter className="w-5 h-5" />
-                            </a>
+
+                        <div className="pt-4 max-w-md">
+                            <h4 className="text-white font-bold mb-3">Subscribe for exclusive deals & menu updates</h4>
+                            <form className="flex" onSubmit={(e) => e.preventDefault()}>
+                                <input 
+                                    type="email" 
+                                    placeholder="Enter your email" 
+                                    className="bg-neutral-900 border border-white/10 rounded-l-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 w-full"
+                                />
+                                <button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-r-xl transition-colors shrink-0">
+                                    <Send className="w-5 h-5" />
+                                </button>
+                            </form>
                         </div>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-white font-bold mb-6">Quick Links</h3>
+                        <h3 className="text-white font-bold mb-6 text-lg">Quick Links</h3>
                         <ul className="space-y-4">
-                            {["Home", "Menu", "Our Story", "Reservations", "Order Online"].map((item) => (
-                                <li key={item}>
-                                    <Link href={item === "Menu" || item === "Order Online" ? "/orders" : item === "Home" ? "/" : `#${item.toLowerCase().replace(" ", "")}`} className="text-slate-400 hover:text-orange-500 transition-colors">
-                                        {item}
+                            {[
+                                { name: "Home", href: "/" },
+                                { name: "Menu", href: "/orders" },
+                                { name: "POS Features", href: POS_URL },
+                                { name: "About", href: "/#about" },
+                                { name: "Contact", href: "/#contact" },
+                                { name: "FAQ", href: "/#faq" }
+                            ].map((item) => (
+                                <li key={item.name}>
+                                    <Link href={item.href} className="text-neutral-400 hover:text-orange-500 transition-colors">
+                                        {item.name}
                                     </Link>
                                 </li>
                             ))}
@@ -46,37 +56,45 @@ export function Footer() {
 
                     {/* Contact Info */}
                     <div>
-                        <h3 className="text-white font-bold mb-6">Contact Us</h3>
+                        <h3 className="text-white font-bold mb-6 text-lg">Contact Us</h3>
                         <ul className="space-y-4">
-                            <li className="flex items-start gap-3 text-slate-400">
+                            <li className="flex items-start gap-3 text-neutral-400">
                                 <MapPin className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
-                                <span>18 Watford Rd,<br />Wembley HA0 3EP, UK</span>
+                                <span>123 Food Street, Culinary District<br />Wembley, HA0 1AB</span>
                             </li>
-                            <li className="flex items-center gap-3 text-slate-400">
+                            <li className="flex items-center gap-3 text-neutral-400">
                                 <Phone className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                                <span>+44 7586 558414</span>
+                                <span>+1 773-541-1711</span>
                             </li>
-                            <li className="flex items-center gap-3 text-slate-400">
+                            <li className="flex items-center gap-3 text-neutral-400">
                                 <Mail className="w-5 h-5 text-orange-500 flex-shrink-0" />
-                                <span>shreekriishnafoods@gmail.com</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Opening Hours */}
-                    <div>
-                        <h3 className="text-white font-bold mb-6">Opening Hours</h3>
-                        <ul className="space-y-4 text-slate-400">
-                            <li className="flex justify-between items-center border-b border-white/5 pb-2">
-                                <span>Mon - Sun</span>
-                                <span>12:00 PM - 11:00 PM</span>
+                                <span>support@foodieschoice.com</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div className="border-t border-white/5 pt-8 text-center text-slate-500 text-sm">
-                    <p>&copy; {new Date().getFullYear()} Foodie's Choice. All rights reserved.</p>
+                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p className="text-neutral-500 text-sm">
+                        &copy; {new Date().getFullYear()} Foodies Choice. All rights reserved.
+                    </p>
+                    
+                    <div className="flex items-center gap-6 text-sm text-neutral-500">
+                        <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
+                    </div>
+
+                    <div className="flex gap-4">
+                        <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
+                            <Instagram className="w-5 h-5" />
+                        </a>
+                        <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
+                            <Facebook className="w-5 h-5" />
+                        </a>
+                        <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-orange-600 transition-colors">
+                            <Twitter className="w-5 h-5" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </footer>

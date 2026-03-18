@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { AnnouncementBanner, GrowthPopup } from "@/components/GrowthFeatures";
 
 import { Toaster } from "sonner";
 
@@ -22,20 +23,20 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Foodie's Choice | Authentic Indian Cuisine in Wembley",
-  description: "Experience the rich flavors of traditional Indian recipes passed down through generations. Located in Wembley, serving authentic curries, biryanys, and street food.",
+  title: "Foodies Choice POS – Order Online & Restaurant Management System",
+  description: "Order delicious food online, reserve your table, or explore our Foodies Choice POS system for restaurants. Fast, secure, and easy to use.",
   openGraph: {
-    title: "Foodie's Choice | Authentic Indian Cuisine",
-    description: "Authentic Indian Cuisine in Wembley. Experience the rich flavors of traditional recipes passed down through generations.",
+    title: "Foodies Choice POS – Order Online & Restaurant Management System",
+    description: "Order delicious food online, reserve your table, or explore our Foodies Choice POS system for restaurants.",
     url: "https://foodieschoice.co.uk",
-    siteName: "Foodie's Choice",
+    siteName: "Foodies Choice",
     locale: "en_GB",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foodie's Choice | Authentic Indian Cuisine",
-    description: "Authentic Indian Cuisine in Wembley. Order online for pickup or delivery.",
+    title: "Foodies Choice POS",
+    description: "Order delicious food online, reserve your table, or explore our POS system.",
   },
   robots: {
     index: true,
@@ -54,10 +55,12 @@ export default function RootLayout({
         className={`${playfair.variable} ${inter.variable} antialiased font-sans bg-black text-white selection:bg-orange-500 selection:text-white`}
       >
         <SmoothScroll>
+          <AnnouncementBanner />
           <Navbar />
           {children}
           <Footer />
         </SmoothScroll>
+        <GrowthPopup />
         <Toaster position="bottom-right" richColors />
       </body>
     </html>
